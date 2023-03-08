@@ -1,6 +1,6 @@
 ﻿namespace ICE_1__words_API
 {
-    public class Afrikaans
+    public class Afrikaans :IWords
     {
         String[] arrAfrikaans = new String[10];
         private Afrikaans()
@@ -15,6 +15,23 @@
             arrAfrikaans[7] = "Boom";
             arrAfrikaans[8] = "Weer";
             arrAfrikaans[9] = "Sit";
+        }
+
+        public string Single()
+        {
+            Random random = new Random();
+            return arrAfrikaans[random.Next(arrAfrikaans.Length)];
+        }
+
+        public string[] Sorted()
+        {
+            return arrAfrikaans.OrderBy(x => x).ToArray();
+        }
+
+
+        public string[] All()
+        {
+            return arrAfrikaans;
         }
     }
 }

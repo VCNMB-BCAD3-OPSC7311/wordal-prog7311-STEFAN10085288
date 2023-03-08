@@ -1,6 +1,6 @@
 ﻿namespace ICE_1__words_API
 {
-    public class English
+    public class English :IWords
     {
         String[] arrEnglish = new String[10];
         private English()
@@ -15,6 +15,23 @@
             arrEnglish[7] = "Hot";
             arrEnglish[8] = "Sweltering";
             arrEnglish[9] = "Scorching";
+        }
+
+        public string Single()
+        {
+            Random random = new Random();
+            return arrEnglish[random.Next(arrEnglish.Length)];
+        }
+
+        public string[] Sorted()
+        {
+            return arrEnglish.OrderBy(x => x).ToArray();
+        }
+
+
+        public string[] All()
+        {
+            return arrEnglish;
         }
     }
 }
