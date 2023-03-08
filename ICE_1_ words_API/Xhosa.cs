@@ -3,7 +3,7 @@
     public class Xhosa : IWords
     {
         String[] arrXhosa = new String[10];
-        private Xhosa()
+        public Xhosa()
         {
             arrXhosa[0] = "Kholeka";
             arrXhosa[1] = "Mdladlana";

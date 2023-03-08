@@ -3,7 +3,7 @@
     public class English :IWords
     {
         String[] arrEnglish = new String[10];
-        private English()
+        public English()
         {
             arrEnglish[0] = "Freezing";
             arrEnglish[1] = "Bracing";

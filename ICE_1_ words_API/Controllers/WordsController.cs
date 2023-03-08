@@ -9,7 +9,7 @@ namespace ICE_1__words_API.Controllers
     {
 
        
-        //meneer se code
+        
         [HttpGet("GetSingle")]
         public ActionResult<string> GetSingle()
         {

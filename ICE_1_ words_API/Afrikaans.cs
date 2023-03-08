@@ -3,7 +3,7 @@
     public class Afrikaans :IWords
     {
         String[] arrAfrikaans = new String[10];
-        private Afrikaans()
+        public Afrikaans()
         {
             arrAfrikaans[0] = "Huis";
             arrAfrikaans[1] = "Boot";
