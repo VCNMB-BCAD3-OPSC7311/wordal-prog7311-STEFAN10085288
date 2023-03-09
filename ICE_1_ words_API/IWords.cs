@@ -4,13 +4,15 @@
     {
 
 
-        String[] All();
+        String[] getNames();
+
+        /*String[] All();
                  
         
         String[] Sorted();
         
 
-        String Single();
+        String Single();*/
         
     }
 }

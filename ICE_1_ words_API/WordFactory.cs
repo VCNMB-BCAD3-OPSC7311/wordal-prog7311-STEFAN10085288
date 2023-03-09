@@ -6,17 +6,17 @@
 
         public IWords getLanguage(string lang)
         {
-            if (lang.ToLower().Equals("english"))
+            if (lang.ToLower().Equals("xhosa"))
             {
-                returnInstance = new English();
+                returnInstance = new Xhosa();
             }
             else if (lang.ToLower().Equals("afrikaans"))
             {
                 returnInstance = new Afrikaans();
             }
-            else
+            else 
             {
-                returnInstance = new Xhosa();
+                returnInstance = new English();
             }
             return returnInstance;
         }

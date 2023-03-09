@@ -11,25 +11,31 @@ namespace ICE_1__words_API.Controllers
        
         
         [HttpGet("GetSingle")]
-        public ActionResult<string> GetSingle()
+        public ActionResult<string> GetSingle(string userInput)
         {
+            WordFactory wordFactory = new WordFactory();
+            IWords lang = wordFactory.getLanguage(userInput);
             WordsClass w = WordsClass.getInstance();
-            return w.Single();
+            return w.Single(lang.getNames());
         }
 
 
         [HttpGet("GetAll")]
-        public String[] GetAll()
+        public String[] GetAll(string userInput)
         {
+            WordFactory wordFactory = new WordFactory();
+            IWords lang = wordFactory.getLanguage(userInput);
             WordsClass w = WordsClass.getInstance();
-            return w.All();
+            return w.All(lang.getNames());
         }
 
         [HttpGet("GetSorted")]
-        public String[] GetSorted()
+        public String[] GetSorted(string userInput)
         {
+            WordFactory wordFactory = new WordFactory();
+            IWords lang = wordFactory.getLanguage(userInput);
             WordsClass w = WordsClass.getInstance();
-            return w.Sorted();
+            return w.Sorted(lang.getNames());
         }
 
 
