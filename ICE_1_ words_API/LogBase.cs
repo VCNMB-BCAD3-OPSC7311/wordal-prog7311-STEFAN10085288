@@ -8,15 +8,17 @@
 
     public class ILogger : LogBase
     {
-        public string filePath = @"D:\Varsity IT\Year3\PROG\ICE_1_ words_API\ICE_1_ words_API\log.txt";
+       
         public override void Log(string message)
         {
-            using (StreamWriter sw = new StreamWriter(filePath))
-            {
-                sw.WriteLine(message);
-                sw.Close();
-            }
+            StreamWriter sw = new StreamWriter("LogFile.txt", true);         
+            sw.WriteLine(message);
+            sw.Close();
+            
         }
     }
+
+
+    
 
 }

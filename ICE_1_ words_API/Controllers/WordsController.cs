@@ -39,9 +39,13 @@ namespace ICE_1__words_API.Controllers
             IWords lang = wordFactory.getLanguage(userInput);
             WordsClass w = WordsClass.getInstance();
 
-            StreamWriter write = new StreamWriter("log.txt", true);
-            write.WriteLine("GetAll method " + " # " + "Language: " + userInput + " # " + "Time: " + now.ToString());
-            write.Close();
+            string ip = Response.HttpContext.Connection.RemoteIpAddress.ToString();
+            if (ip == "::1")
+            {
+                ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList[1].ToString();
+            }
+
+            log.Log("GetSingle method " + " # Language: " + userInput + " # Time: " + now.ToString() + "# IP Address: " + ip);
 
             return w.All(lang.getNames());
         }
@@ -53,12 +57,18 @@ namespace ICE_1__words_API.Controllers
             IWords lang = wordFactory.getLanguage(userInput);
             WordsClass w = WordsClass.getInstance();
 
-            StreamWriter write = new StreamWriter("log.txt", true);
-            write.WriteLine("GetSorted method " + " # " + "Language: " + userInput + " # " + "Time: " + now.ToString());
-            write.Close();
+            string ip = Response.HttpContext.Connection.RemoteIpAddress.ToString();
+            if (ip == "::1")
+            {
+                ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList[1].ToString();
+            }
+
+            log.Log("GetSingle method " + " # Language: " + userInput + " # Time: " + now.ToString() + "# IP Address: " + ip);
 
             return w.Sorted(lang.getNames());
         }
 
+
+       
     }
 }
