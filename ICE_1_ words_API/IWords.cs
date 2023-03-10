@@ -2,10 +2,6 @@
 {
     public interface IWords
     {
-
-
-        String[] getNames();
-
-        
+        String[] getNames();        
     }
 }
