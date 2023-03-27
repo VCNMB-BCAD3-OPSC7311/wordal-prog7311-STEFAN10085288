@@ -6,6 +6,7 @@ namespace ICE_1__words_API
 {
     public class WordsClass
     {
+        //singleton
         private static WordsClass instance;
        
         private  WordsClass()

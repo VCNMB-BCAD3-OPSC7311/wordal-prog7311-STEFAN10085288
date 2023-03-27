@@ -2,11 +2,13 @@
 {
     public class Xhosa : IWords
     {
-        String[] arrXhosa = new String[10];
+        /* String[] arrXhosa = new String[10];*/
 
         public string[] getNames()
         {
-            arrXhosa[0] = "Kholeka";
+            DBControl dBControl = new DBControl();
+            return dBControl.Xhosa();
+            /*arrXhosa[0] = "Kholeka";
             arrXhosa[1] = "Mdladlana";
             arrXhosa[2] = "Phathiswa ";
             arrXhosa[3] = "Mhlambiso";
@@ -17,8 +19,10 @@
             arrXhosa[8] = "Faniswa";
             arrXhosa[9] = "Vetyeka";
 
-            return arrXhosa;
+            return arrXhosa;*/
         }
+
+       
 
     }
 }
