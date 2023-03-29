@@ -1,5 +1,11 @@
 ﻿using Microsoft.AspNetCore.Routing.Constraints;
 using System.Net;
+using System.Text.Json.Serialization;
+using System.Net.Http.Json;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
+
 
 namespace ICE_1__words_API
 {
@@ -21,7 +27,7 @@ namespace ICE_1__words_API
             request.Timeout = Timeout.Infinite;
             request.KeepAlive = true;
 
-            try 
+            try
             {
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
@@ -30,20 +36,22 @@ namespace ICE_1__words_API
                     StreamReader reader = new StreamReader(dataStream);
                     string responseFronServer = reader.ReadToEnd();
                     Console.WriteLine(responseFronServer);
-                    string[] data = responseFronServer.Split(new char[] { '[', '{', ',', '\"' }, StringSplitOptions.RemoveEmptyEntries);
-                   
+
+
+                    string[] data = responseFronServer.Split(new char[] { '[', ']', ',' }, StringSplitOptions.RemoveEmptyEntries);
+
                     while (data.Length > i)
                     {
                         userData.Add(data[i]);
                         i++;
                         Console.WriteLine(data[i]);
                     }
-                    
+
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);   
+                Console.WriteLine(ex);
             }
 
             return userData.ToArray();
@@ -69,7 +77,7 @@ namespace ICE_1__words_API
                     StreamReader reader = new StreamReader(dataStream);
                     string responseFronServer = reader.ReadToEnd();
                     Console.WriteLine(responseFronServer);
-                    string[] data = responseFronServer.Split(new char[] { '[', '{', ',', '\"' }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] data = responseFronServer.Split(new char[] { '[', '{', ',', '\"', ']' }, StringSplitOptions.RemoveEmptyEntries);
                     while (data.Length > i)
                     {
                         eng.Add(data[i]);
@@ -92,7 +100,7 @@ namespace ICE_1__words_API
             long length = 0;
             int i = 0;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + "?getnamesenglish");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url + "?getnamesafrikaans");
 
             request.Method = "GET";
             request.Timeout = Timeout.Infinite;

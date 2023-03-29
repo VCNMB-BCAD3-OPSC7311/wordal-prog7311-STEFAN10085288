@@ -14,7 +14,7 @@
             {
                 returnInstance = new Afrikaans();
             }
-            else 
+            else if(lang.ToLower().Equals("english"))
             {
                 returnInstance = new English();
             }

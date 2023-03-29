@@ -3,6 +3,7 @@ using NLog;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net;
+using System.Text;
 using System.Xml.Linq;
 
 namespace ICE_1__words_API.Controllers
@@ -17,22 +18,17 @@ namespace ICE_1__words_API.Controllers
     public class WordsController : Controller
     {
         
-        static string connString = @"Data Source = st10085288.database.windows.net; Initial Catalog = WordleApp; Persist Security Info=True;User ID = st10085288; Password=Lgnbxlnk0108;  Trusted_Connection=False; MultipleActiveResultSets=true";
-        SqlConnection dbConn = new SqlConnection(connString);
-        SqlCommand dbComm = new SqlCommand();
-
-
         DateTime now = DateTime.Now;
         ILogger log = new ILogger();
 
         [HttpGet("GetSingle")]
-        public ActionResult<string> GetSingle(string userInput)
+        public string GetSingle(string userInput)
         {
             WordFactory wordFactory = new WordFactory();
             IWords lang = wordFactory.getLanguage(userInput);
             WordsClass w = WordsClass.getInstance();
 
-            //get ip address
+            /*//get ip address
             string ip = Response.HttpContext.Connection.RemoteIpAddress.ToString();
             if (ip == "::1")
             {
@@ -40,7 +36,7 @@ namespace ICE_1__words_API.Controllers
             }
 
             //log info
-            log.Log("GetSingle method " + " # Language: " + userInput + " # Time: " + now.ToString() + "# IP Address: " + ip);
+            log.Log("GetSingle method " + " # Language: " + userInput + " # Time: " + now.ToString() + "# IP Address: " + ip);*/
 
             return w.Single(lang.getNames());
         }
@@ -53,7 +49,7 @@ namespace ICE_1__words_API.Controllers
             IWords lang = wordFactory.getLanguage(userInput);
             WordsClass w = WordsClass.getInstance();
 
-            //get ip address
+            /*//get ip address
             string ip = Response.HttpContext.Connection.RemoteIpAddress.ToString();
             if (ip == "::1")
             {
@@ -61,7 +57,7 @@ namespace ICE_1__words_API.Controllers
             }
 
             //log info
-            log.Log("GetSingle method " + " # Language: " + userInput + " # Time: " + now.ToString() + "# IP Address: " + ip);
+            log.Log("GetSingle method " + " # Language: " + userInput + " # Time: " + now.ToString() + "# IP Address: " + ip);*/
 
             return w.All(lang.getNames());
         }
@@ -88,8 +84,11 @@ namespace ICE_1__words_API.Controllers
 
 
         [HttpGet("GetUserData")]
-        public String[] GetURLData()
+        public  String[] GetUserData()
         {
+
+            WordsClass w = WordsClass.getInstance();
+
             //get ip address
             string ip = Response.HttpContext.Connection.RemoteIpAddress.ToString();
             if (ip == "::1")
@@ -98,7 +97,7 @@ namespace ICE_1__words_API.Controllers
             }
 
             //log info
-            log.Log("GetUserData method "  + "# Time: " + now.ToString() + "# IP Address: " + ip);
+            log.Log("GetUserData method " + "# Time: " + now.ToString() + "# IP Address: " + ip);
 
             DBControl dBControl = new DBControl();
             return dBControl.UserData();
@@ -106,33 +105,44 @@ namespace ICE_1__words_API.Controllers
 
 
         [HttpPost("PostWords")]
-        public void Post(string userInput) 
+        public void PostWords(string userInput) 
         {
             WordFactory wordFactory = new WordFactory();
             IWords lang = wordFactory.getLanguage(userInput);
             WordsClass w = WordsClass.getInstance();
-            foreach (var item in w.All(lang.getNames()))
+
+            w.postWords(userInput, w.All(lang.getNames()));
+
+            //get ip address
+            string ip = Response.HttpContext.Connection.RemoteIpAddress.ToString();
+            if (ip == "::1")
             {
-                dbConn.Open();
-                string sql = "Insert into " + userInput + " (word) Values (" + "'" + item + "') ;";
-                dbComm = new SqlCommand(sql, dbConn);
-                int i = dbComm.ExecuteNonQuery();
-                if (i >= 1)
-                {
-                    Console.WriteLine("Added Successfully");
-
-                }
-                else
-                {
-                    Console.WriteLine("Not Added");
-
-                }
-                dbConn.Close();
+                ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList[1].ToString();
             }
 
-
+            //log info
+            log.Log("PostWords method " + " # Language: " + userInput + " # Time: " + now.ToString() + "# IP Address: " + ip);
         }
 
+       /* [HttpPost("PostUserInFo")]
+        public void PostUserInfo()
+        {
+            WordFactory wordFactory = new WordFactory();
+            IWords lang = wordFactory.getLanguage(userInput);
+            WordsClass w = WordsClass.getInstance();
+            
+
+
+            //get ip address
+            string ip = Response.HttpContext.Connection.RemoteIpAddress.ToString();
+            if (ip == "::1")
+            {
+                ip = Dns.GetHostEntry(Dns.GetHostName()).AddressList[1].ToString();
+            }
+
+            //log info
+            log.Log("PostUser method " + " # Time: " + now.ToString() + "# IP Address: " + ip);
+        }*/
 
 
 

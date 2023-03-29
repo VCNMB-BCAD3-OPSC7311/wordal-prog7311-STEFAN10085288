@@ -1,0 +1,26 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF66D7E5" Offset="1"/>
+                <GradientStop Color="#FF15ACBE" Offset="0.771"/>
+                <GradientStop Color="#FF1192A1" Offset="0.001"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Button x:Name="btnGuess" Content="GUESS" HorizontalAlignment="Center" Margin="0,297,0,0" VerticalAlignment="Top" Background="#FFF9F9F9" FontSize="20" FontWeight="Bold" Click="btnGuess_Click"/>
+        <TextBox x:Name="txtGuess" HorizontalAlignment="Center" Margin="0,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="20"/>
+        <TextBlock x:Name="txtletter1" HorizontalAlignment="Left" Margin="265,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="50" TextAlignment="Center" FontWeight="Bold" Text="1" IsEnabled="False" FontSize="36" Background="#FFF9F9F9"/>
+        <TextBlock x:Name="txtletter1_Copy" HorizontalAlignment="Left" Margin="320,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="50" TextAlignment="Center" FontWeight="Bold" Text="2" IsEnabled="False" FontSize="36" Background="#FFF9F9F9"/>
+        <TextBlock x:Name="txtletter1_Copy1" HorizontalAlignment="Center" Margin="0,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="50" TextAlignment="Center" FontWeight="Bold" Text="3" IsEnabled="False" FontSize="36" Background="#FFF9F9F9"/>
+        <TextBlock x:Name="txtletter1_Copy2" HorizontalAlignment="Left" Margin="430,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="50" TextAlignment="Center" FontWeight="Bold" Text="4" IsEnabled="False" FontSize="36" Background="#FFF9F9F9"/>
+        <TextBlock x:Name="txtletter1_Copy3" HorizontalAlignment="Left" Margin="485,167,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="50" TextAlignment="Center" FontWeight="Bold" Text="5" IsEnabled="False" FontSize="36" Background="#FFF9F9F9"/>
+        <TextBlock HorizontalAlignment="Left" Margin="342,43,0,0" TextWrapping="Wrap" Text="Enter guess word" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
