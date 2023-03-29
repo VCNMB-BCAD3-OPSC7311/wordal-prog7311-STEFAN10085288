@@ -15,25 +15,25 @@ namespace ICE_1__words_API
             return result;
         }
 
-        public ArrayList checkCharacterPosition(string letter, string word)
+        public List<bool> checkCharacterPosition(string letter, string word)
         {
-            ArrayList arrPositionResults = new ArrayList();
+            List<bool> arrPositionResults = new List<bool>();
             bool result = false;
             foreach (char c in word) 
             {
-                result = letter.Equals(c);
+                result = letter.Equals(c.ToString());
                 arrPositionResults.Add(result);
             }
             return arrPositionResults;
         }
 
-        public ArrayList checkCharacterContain(string letter, string word)
+        public List<bool> checkCharacterContain(string letter, string word)
         {
-            ArrayList arrContainsResults = new ArrayList();
+            List<bool> arrContainsResults = new List<bool>();
             bool isExist = false;
             foreach (char c in word)
             {
-                isExist = word.Contains(c);
+                isExist = word.Contains(letter.ToString());
                 arrContainsResults.Add(isExist);
             }
             return arrContainsResults;

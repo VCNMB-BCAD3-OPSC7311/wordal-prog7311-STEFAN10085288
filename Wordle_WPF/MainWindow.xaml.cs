@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ICE_1__words_API;
 using ICE_1__words_API.Controllers;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.Razor;
+using NLog.Layouts;
 
 namespace Wordle_WPF
 {
@@ -30,9 +33,17 @@ namespace Wordle_WPF
         public static string? lang;
         public static string? word;
 
-        public ArrayList arrPositionResults = new ArrayList();
-        public ArrayList arrContainsResults = new ArrayList();
+        public List<bool> arrPositionResults = new List<bool>();  
+        public List<bool> arrContainsResults = new List<bool>();
+
+        public ArrayList arrWordInputLetter = new ArrayList();
+        public List<TextBlock> arrTextBlocks = new List<TextBlock>();
+        public TextBox[] textBoxes = new TextBox[5];
+        
         int attempts = 5;
+
+        private Paragraph paragraph;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -40,32 +51,64 @@ namespace Wordle_WPF
 
         private void btnGuess_Click(object sender, RoutedEventArgs e)
         {
+            arrTextBlocks.Add(txt1);
+            arrTextBlocks.Add(txt2);
+            arrTextBlocks.Add(txt3);
+            arrTextBlocks.Add(txt4);
+            arrTextBlocks.Add(txt5);
+
+
             string wordInput = txtGuess.Text;
             bool result = false;
 
             getLangauge();
-            result = guessWord.checkWord(wordInput, word.ToLower());
-
+            result = guessWord.checkWord(wordInput.ToLower(), word.ToLower());
            
-                if (result)
-                {
-                    MessageBox.Show("Well done! You guessed correctly");
-
-                }
-                else
-                {
-                    attempts--;
-                    MessageBox.Show("Sorry, that is the incorrect word. You have " + attempts + " left");
-                }
+            if (result)
+            {
+                MessageBox.Show("Well done! You guessed correctly");
+                attempts = 5;
+                SetDefualtValues();
+            }
+            else
+            {
+                attempts--;
+                MessageBox.Show("Sorry, that is the incorrect word. You have " + attempts + " attempts left");
+             }
 
 
             if (attempts == 0)
             {
-                MessageBox.Show("GAME OVER!\n"+"THE CORRECT WORD WAS " + word.ToUpper());
+                MessageBox.Show("GAME OVER!\n"+"THE CORRECT WORD WAS " + word.ToUpper() + "\nCLICK OK TO RESET");
                 attempts = 5;
                 SetDefualtValues();
             }
+            
 
+ 
+            for (int i = 0; i <= wordInput.Length-1; i++)
+            {
+
+                arrContainsResults = guessWord.checkCharacterContain(wordInput[i].ToString().ToLower(), word.ToLower());
+                arrPositionResults = guessWord.checkCharacterPosition(wordInput[i].ToString().ToLower(), word.ToLower());
+                arrTextBlocks[i].Text = wordInput[i].ToString();
+
+                if (arrPositionResults[i] && arrContainsResults[i])
+                {                 
+                    arrTextBlocks[i].Foreground = Brushes.Green;
+                }
+                else if (arrContainsResults[i] && !arrPositionResults[i])
+                {
+                    arrTextBlocks[i].Foreground = Brushes.Yellow;
+                }
+                else if (!arrContainsResults[i] && !arrPositionResults[i])
+                {
+                    arrTextBlocks[i].Foreground = Brushes.Red;
+                }
+                
+            }
+
+            SetDefualtValues();
 
         }
 
@@ -74,16 +117,13 @@ namespace Wordle_WPF
         {
             word = controller.GetSingle(lang);
             txtTest.Text = word;
-            txtHint.Text = "Hint: Word contains " + word.Length + " characters";
         }
 
         public void getLangauge()
         {
             if (cmbLanguages.SelectedIndex == 0){ lang = "Afrikaans";}
             else if (cmbLanguages.SelectedIndex == 1) { lang = "English"; }
-            else if (cmbLanguages.SelectedIndex == 2) { lang = "Xhosa"; }
-            
-                          
+            else if (cmbLanguages.SelectedIndex == 2) { lang = "Xhosa"; }                        
         }
 
         private void cmbLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -91,14 +131,6 @@ namespace Wordle_WPF
             getLangauge();
             getWord();
             cmbLanguages.IsEnabled = false;
-
-        }
-
-        public void SetupScreen()
-        {
-            InitializeComponent();
-            SetDefualtValues();
-
         }
 
         public void SetDefualtValues()
@@ -107,13 +139,19 @@ namespace Wordle_WPF
             cmbLanguages.SelectedIndex = -1;
             cmbLanguages.IsEnabled = true;
             txtGuess.Text = "";
-            txtHint.Text = "";
-            txtResult.Document.Blocks.Clear();
-            txtTest.Text = "";
+            txtTest.Text = "";      
+            txt1.Text = " ";
+            txt2.Text = " ";
+            txt3.Text = " ";
+            txt4.Text = " ";
+            txt5.Text = " ";
             
+        }
+
+        private void txtResult_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
         }
-        
     }
 
 

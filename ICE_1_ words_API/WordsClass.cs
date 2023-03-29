@@ -11,6 +11,8 @@ namespace ICE_1__words_API
         static string connString = @"Data Source = st10085288.database.windows.net; Initial Catalog = WordleApp; Persist Security Info=True;User ID = st10085288; Password=Lgnbxlnk0108;  Trusted_Connection=False; MultipleActiveResultSets=true";
         SqlConnection dbConn = new SqlConnection(connString);
         SqlCommand dbComm = new SqlCommand();
+        String randomWord = "";
+        List<String> list = new List<String>();
 
         //singleton
         private static WordsClass instance;
@@ -41,8 +43,18 @@ namespace ICE_1__words_API
 
         public String Single(String[] arrWords)
         {
+           
             Random random= new Random();
-            return arrWords[random.Next(arrWords.Length)];
+            foreach (String word in arrWords)
+            {
+               if(word.Length == 5)
+                {
+                    list.Add(word);
+                }
+            }        
+            int index = random.Next(list.Count);
+            randomWord = list[index];     
+            return randomWord;
 
         }
 

@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Wordle_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="488" Width="888">
+    <Grid Margin="0,0,-29,-82">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FF66D7E5" Offset="1"/>
@@ -14,23 +18,20 @@
                 <GradientStop Color="#FF1192A1" Offset="0.001"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Button x:Name="btnGuess" Content="GUESS" HorizontalAlignment="Center" Margin="0,297,0,0" VerticalAlignment="Top" Background="#FFF9F9F9" FontSize="20" FontWeight="Bold" Click="btnGuess_Click"/>
-        <TextBox x:Name="txtGuess" HorizontalAlignment="Center" Margin="0,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="20"/>
-        <TextBlock HorizontalAlignment="Center" Margin="0,95,0,0" TextWrapping="Wrap" Text="Enter guess word" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cmbLanguages" HorizontalAlignment="Center" Margin="0,60,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cmbLanguages_SelectionChanged">
+        <Button x:Name="btnGuess" Content="GUESS" HorizontalAlignment="Center" Margin="0,350,0,0" VerticalAlignment="Top" Background="#FFF9F9F9" FontSize="20" FontWeight="Bold" Click="btnGuess_Click" Grid.Column="1"/>
+        <TextBox x:Name="txtGuess" HorizontalAlignment="Center" Margin="0,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="20" Grid.Column="1"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,95,0,0" TextWrapping="Wrap" Text="Enter guess word" VerticalAlignment="Top" Grid.Column="1"/>
+        <ComboBox x:Name="cmbLanguages" HorizontalAlignment="Center" Margin="0,60,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cmbLanguages_SelectionChanged" Grid.Column="1">
             <ComboBoxItem Content="Afrikaans"/>
             <ComboBoxItem Content="English"/>
             <ComboBoxItem Content="Xhosa"/>
         </ComboBox>
-        <TextBlock HorizontalAlignment="Center" Margin="0,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110"><Run Text="Cho"/><Run Language="en-za" Text="o"/><Run Text="se a la"/><Run Text="n"/><Run Text="guage"/></TextBlock>
-        <TextBlock x:Name="txtTest" HorizontalAlignment="Left" Margin="696,395,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="NaN" Height="15"/>
-        <TextBlock x:Name="txtHint" HorizontalAlignment="Center" Margin="0,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" Text=" "/>
-        <RichTextBox x:Name="txtResult" Margin="360,226,360,188" IsEnabled="False">
-            <FlowDocument>
-                <Paragraph>
-                    <Run Text="RichTextBox"/>
-                </Paragraph>
-            </FlowDocument>
-        </RichTextBox>
+        <TextBlock HorizontalAlignment="Center" Margin="0,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" Grid.Column="1"><Run Text="Cho"/><Run Language="en-za" Text="o"/><Run Text="se a la"/><Run Text="n"/><Run Text="guage"/></TextBlock>
+        <TextBlock x:Name="txtTest" HorizontalAlignment="Left" Margin="696,395,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="NaN" Height="15" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="txt1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="276,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="50" Background="#FFF4F2F2" FontWeight="Bold" FontSize="36" Text="1" IsEnabled="False" TextAlignment="Center" Foreground="Black"/>
+        <TextBlock x:Name="txt2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="364,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="50" Background="#FFF4F2F2" FontWeight="Bold" FontSize="36" Text="2" IsEnabled="False" TextAlignment="Center"/>
+        <TextBlock x:Name="txt3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="441,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="50" Background="#FFF4F2F2" FontWeight="Bold" FontSize="36" Text="3" IsEnabled="False" TextAlignment="Center"/>
+        <TextBlock x:Name="txt4" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="527,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="50" Background="#FFF4F2F2" FontWeight="Bold" FontSize="36" Text="4" IsEnabled="False" TextAlignment="Center"/>
+        <TextBlock x:Name="txt5" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="604,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="50" Background="#FFF4F2F2" FontWeight="Bold" FontSize="36" Text="5" IsEnabled="False" TextAlignment="Center"/>
     </Grid>
 </Window>
