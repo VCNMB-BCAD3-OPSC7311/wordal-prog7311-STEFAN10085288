@@ -42,8 +42,6 @@ namespace Wordle_WPF
         
         int attempts = 5;
 
-        private Paragraph paragraph;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -64,17 +62,40 @@ namespace Wordle_WPF
             getLangauge();
             result = guessWord.checkWord(wordInput.ToLower(), word.ToLower());
            
+            //checks guess word and provides feedback
             if (result)
             {
                 MessageBox.Show("Well done! You guessed correctly");
-                attempts = 5;
                 SetDefualtValues();
             }
             else
             {
                 attempts--;
                 MessageBox.Show("Sorry, that is the incorrect word. You have " + attempts + " attempts left");
-             }
+
+                //checks characters contain and position
+                for (int i = 0; i <= wordInput.Length - 1; i++)
+                {
+
+                    arrContainsResults = guessWord.checkCharacterContain(wordInput[i].ToString().ToLower(), word.ToLower());
+                    arrPositionResults = guessWord.checkCharacterPosition(wordInput[i].ToString().ToLower(), word.ToLower());
+                    arrTextBlocks[i].Text = wordInput[i].ToString();
+
+                    if (arrPositionResults[i] && arrContainsResults[i])
+                    {
+                        arrTextBlocks[i].Foreground = Brushes.Green;
+                    }
+                    else if (arrContainsResults[i] && !arrPositionResults[i])
+                    {
+                        arrTextBlocks[i].Foreground = Brushes.Yellow;
+                    }
+                    else if (!arrContainsResults[i] && !arrPositionResults[i])
+                    {
+                        arrTextBlocks[i].Foreground = Brushes.Red;
+                    }
+
+                }
+            }
 
 
             if (attempts == 0)
@@ -85,40 +106,21 @@ namespace Wordle_WPF
             }
             
 
- 
-            for (int i = 0; i <= wordInput.Length-1; i++)
-            {
+            
 
-                arrContainsResults = guessWord.checkCharacterContain(wordInput[i].ToString().ToLower(), word.ToLower());
-                arrPositionResults = guessWord.checkCharacterPosition(wordInput[i].ToString().ToLower(), word.ToLower());
-                arrTextBlocks[i].Text = wordInput[i].ToString();
 
-                if (arrPositionResults[i] && arrContainsResults[i])
-                {                 
-                    arrTextBlocks[i].Foreground = Brushes.Green;
-                }
-                else if (arrContainsResults[i] && !arrPositionResults[i])
-                {
-                    arrTextBlocks[i].Foreground = Brushes.Yellow;
-                }
-                else if (!arrContainsResults[i] && !arrPositionResults[i])
-                {
-                    arrTextBlocks[i].Foreground = Brushes.Red;
-                }
-                
-            }
 
-            SetDefualtValues();
 
         }
 
-
+        //get random word from DB
         public void getWord()
         {
-            word = controller.GetSingle(lang);
+            word = controller.GetRandomWord(lang);
             txtTest.Text = word;
         }
 
+        //Get language selection from user
         public void getLangauge()
         {
             if (cmbLanguages.SelectedIndex == 0){ lang = "Afrikaans";}
@@ -126,6 +128,7 @@ namespace Wordle_WPF
             else if (cmbLanguages.SelectedIndex == 2) { lang = "Xhosa"; }                        
         }
 
+        //gets data depeneding on user selection
         private void cmbLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             getLangauge();
@@ -133,6 +136,7 @@ namespace Wordle_WPF
             cmbLanguages.IsEnabled = false;
         }
 
+        //resets values
         public void SetDefualtValues()
         {
             attempts = 5;
@@ -144,8 +148,8 @@ namespace Wordle_WPF
             txt2.Text = " ";
             txt3.Text = " ";
             txt4.Text = " ";
-            txt5.Text = " ";
-            
+            txt5.Text = " ";  
+            arrTextBlocks.Clear();
         }
 
         private void txtResult_TextChanged(object sender, TextChangedEventArgs e)

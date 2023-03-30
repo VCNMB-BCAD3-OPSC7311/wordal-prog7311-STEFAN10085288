@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Formatters;
+using System;
 using System.Collections.Immutable;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
@@ -11,7 +12,7 @@ namespace ICE_1__words_API
         static string connString = @"Data Source = st10085288.database.windows.net; Initial Catalog = WordleApp; Persist Security Info=True;User ID = st10085288; Password=Lgnbxlnk0108;  Trusted_Connection=False; MultipleActiveResultSets=true";
         SqlConnection dbConn = new SqlConnection(connString);
         SqlCommand dbComm = new SqlCommand();
-        String randomWord = "";
+        public String  randomWord = "";
         List<String> list = new List<String>();
 
         //singleton
@@ -78,6 +79,29 @@ namespace ICE_1__words_API
                 }
                 dbConn.Close();
             }
+        }
+
+
+        public string getRandomWord(string userInput)
+        {
+            dbConn.Open();
+            string sql =  "SELECT TOP 1 word FROM " + userInput + " where len(word) = 5 ORDER BY NEWID() ;";
+            dbComm = new SqlCommand(sql, dbConn); 
+            int i = dbComm.ExecuteNonQuery();
+            string output = (string)dbComm.ExecuteScalar();
+            if (i >= 1)
+            {
+                Console.WriteLine("Retrieved Successfully");
+            }
+            else
+            {
+                Console.WriteLine("Not retrieved");
+            }
+
+            dbConn.Close();
+            return output;
+            
+
         }
 
         public void postUserInfo(User user)
