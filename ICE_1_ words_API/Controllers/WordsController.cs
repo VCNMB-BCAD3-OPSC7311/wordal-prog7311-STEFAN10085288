@@ -20,6 +20,7 @@ namespace ICE_1__words_API.Controllers
         
         DateTime now = DateTime.Now;
         ILogger log = new ILogger();
+       
 
         [HttpGet("GetSingle")]
         public string GetSingle(string userInput)
@@ -27,6 +28,7 @@ namespace ICE_1__words_API.Controllers
             WordFactory wordFactory = new WordFactory();
             IWords lang = wordFactory.getLanguage(userInput);
             WordsClass w = WordsClass.getInstance();
+            
 
             /*//get ip address
             string ip = Response.HttpContext.Connection.RemoteIpAddress.ToString();
@@ -83,13 +85,13 @@ namespace ICE_1__words_API.Controllers
         }
 
 
-        [HttpGet("GetUserData")]
-        public  String[] GetUserData()
+        [HttpPost("PostUserData")]
+        public void PostUserData()
         {
 
             WordsClass w = WordsClass.getInstance();
-
-            //get ip address
+   
+            /*//get ip address
             string ip = Response.HttpContext.Connection.RemoteIpAddress.ToString();
             if (ip == "::1")
             {
@@ -98,9 +100,9 @@ namespace ICE_1__words_API.Controllers
 
             //log info
             log.Log("GetUserData method " + "# Time: " + now.ToString() + "# IP Address: " + ip);
-
-            DBControl dBControl = new DBControl();
-            return dBControl.UserData();
+*/
+            
+             w.postUserData();
         }
 
 
@@ -136,12 +138,7 @@ namespace ICE_1__words_API.Controllers
         }
 
 
-        [HttpPost("PostUserData")]
-        public void PostUserData()
-        {
-            WordsClass w = WordsClass.getInstance();
-            w.postUserData();
-        }
+
 
 
 

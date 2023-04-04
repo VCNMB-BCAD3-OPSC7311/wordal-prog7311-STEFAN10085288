@@ -12,11 +12,9 @@ namespace ICE_1__words_API
         static string connString = @"Data Source = st10085288.database.windows.net; Initial Catalog = WordleApp; Persist Security Info=True;User ID = st10085288; Password=Lgnbxlnk0108;  Trusted_Connection=False; MultipleActiveResultSets=true";
         SqlConnection dbConn = new SqlConnection(connString);
         SqlCommand dbComm = new SqlCommand();
+
         public String  randomWord = "";
         List<String> list = new List<String>();
-
-        DBControl dbControl = new DBControl();  
-        User User = new User();
 
         //singleton
         private static WordsClass instance;
@@ -109,12 +107,7 @@ namespace ICE_1__words_API
 
         public void postUserData()
         {
-            var t = dbControl.download_serialized_json_data<User>();
-            dbConn.Open();
-            string sql = "INSERT INTO UserData (name, password, imageURL) VALUES ( '" + t.name + "','" + t.password + "','" + t.image + "');";
-            dbComm = new SqlCommand (sql, dbConn);
-            int i = dbComm.ExecuteNonQuery();
-            dbConn.Close();
+             User.GetUserDataURL();
         }
 
 

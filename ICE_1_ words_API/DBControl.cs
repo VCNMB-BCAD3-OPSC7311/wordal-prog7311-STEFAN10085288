@@ -20,6 +20,26 @@ namespace ICE_1__words_API
         List<char> charsToRemove = new List<char>() { '[', ']' };
 
 
+        public static async void GetUserDataURL()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string uesrUrl = url + "?getuserdb";
+                HttpResponseMessage response = await client.GetAsync(uesrUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    List<User> users = JsonConvert.DeserializeObject<List<User>>(json);
+
+                    foreach (User user in users)
+                    {
+                        User.InsertUserIntoDB(user);
+                    }
+                }
+            }
+        }
+
         //gets data from url as json file. Not working :(
         public  T download_serialized_json_data<T>() where T: new ()
         {
