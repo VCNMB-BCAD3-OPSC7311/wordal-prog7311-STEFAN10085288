@@ -5,7 +5,8 @@ using System.Net.Http.Json;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-
+using NPOI.SS.Formula.Functions;
+using Newtonsoft.Json;
 
 namespace ICE_1__words_API
 {
@@ -16,6 +17,27 @@ namespace ICE_1__words_API
         private List<string> afr = new List<string>();
         private List<string> eng = new List<string>();
         private List<string> xho = new List<string>();
+        List<char> charsToRemove = new List<char>() { '[', ']' };
+
+
+        //gets data from url as json file. Not working :(
+        public  T download_serialized_json_data<T>() where T: new ()
+        {
+            using (var w =new System.Net.WebClient())
+            {
+                var json_data = string.Empty;
+                try{
+                    json_data = w.DownloadString(url + "?getuserdb");
+                    }
+                catch(Exception)
+                {}
+                var new_json_data = json_data.Trim(new char[] {'[', ']' });
+                return !string.IsNullOrEmpty(new_json_data) ? JsonConvert.DeserializeObject<T>(new_json_data) : new T();
+            }
+        }
+
+
+        //gets data as a list of strings
         public String[] UserData()
         {
             long length = 0;
@@ -57,6 +79,9 @@ namespace ICE_1__words_API
             return userData.ToArray();
         }
 
+
+       
+
         public String[] English()
         {
             long length = 0;
@@ -72,12 +97,20 @@ namespace ICE_1__words_API
             {
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
+                    
                     length = response.ContentLength;
                     Stream dataStream = response.GetResponseStream();
                     StreamReader reader = new StreamReader(dataStream);
                     string responseFronServer = reader.ReadToEnd();
                     Console.WriteLine(responseFronServer);
+
+                    foreach (var item in charsToRemove)
+                    {
+                        responseFronServer = responseFronServer.Replace(item.ToString(), string.Empty);
+                    }
+
                     string[] data = responseFronServer.Split(new char[] { '[', '{', ',', '\"', ']' }, StringSplitOptions.RemoveEmptyEntries);
+                    
                     while (data.Length > i)
                     {
                         eng.Add(data[i]);
@@ -115,6 +148,12 @@ namespace ICE_1__words_API
                     StreamReader reader = new StreamReader(dataStream);
                     string responseFronServer = reader.ReadToEnd();
                     Console.WriteLine(responseFronServer);
+
+                    foreach (var item in charsToRemove)
+                    {
+                        responseFronServer = responseFronServer.Replace(item.ToString(), string.Empty);
+                    }
+
                     string[] data = responseFronServer.Split(new char[] { '[', '{', ',', '\"' }, StringSplitOptions.RemoveEmptyEntries);
                     while (data.Length > i)
                     {
@@ -153,6 +192,10 @@ namespace ICE_1__words_API
                     StreamReader reader = new StreamReader(dataStream);
                     string responseFronServer = reader.ReadToEnd();
                     Console.WriteLine(responseFronServer);
+                    foreach (var item in charsToRemove)
+                    {
+                        responseFronServer = responseFronServer.Replace(item.ToString(), string.Empty);
+                    }
                     string[] data = responseFronServer.Split(new char[] { '[', '{', ',', '\"' }, StringSplitOptions.RemoveEmptyEntries);
                     while (data.Length > i)
                     {

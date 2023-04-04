@@ -70,9 +70,6 @@ namespace Wordle_WPF
             }
             else
             {
-                attempts--;
-                MessageBox.Show("Sorry, that is the incorrect word. You have " + attempts + " attempts left");
-
                 //checks characters contain and position
                 for (int i = 0; i <= wordInput.Length - 1; i++)
                 {
@@ -95,6 +92,10 @@ namespace Wordle_WPF
                     }
 
                 }
+                attempts--;
+                MessageBox.Show("Sorry, that is the incorrect word. You have " + attempts + " attempts left");
+
+                
             }
 
 

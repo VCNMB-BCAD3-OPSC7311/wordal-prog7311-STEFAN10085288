@@ -15,6 +15,9 @@ namespace ICE_1__words_API
         public String  randomWord = "";
         List<String> list = new List<String>();
 
+        DBControl dbControl = new DBControl();  
+        User User = new User();
+
         //singleton
         private static WordsClass instance;
        
@@ -104,26 +107,14 @@ namespace ICE_1__words_API
 
         }
 
-        public void postUserInfo(User user)
+        public void postUserData()
         {
-/*            foreach (var item in)
-            {
-                dbConn.Open();
-                string sql = "Insert into Users (name, password, imageURl) Values ('" + user.Name + "','" + user.Password + "','" + user.ImgUrl + "' ) ;";
-                dbComm = new SqlCommand(sql, dbConn);
-                int i = dbComm.ExecuteNonQuery();
-                if (i >= 1)
-                {
-                    Console.WriteLine("Added Successfully");
-
-                }
-                else
-                {
-                    Console.WriteLine("Not Added");
-
-                }
-                dbConn.Close();
-            }*/
+            var t = dbControl.download_serialized_json_data<User>();
+            dbConn.Open();
+            string sql = "INSERT INTO UserData (name, password, imageURL) VALUES ( '" + t.name + "','" + t.password + "','" + t.image + "');";
+            dbComm = new SqlCommand (sql, dbConn);
+            int i = dbComm.ExecuteNonQuery();
+            dbConn.Close();
         }
 
 
