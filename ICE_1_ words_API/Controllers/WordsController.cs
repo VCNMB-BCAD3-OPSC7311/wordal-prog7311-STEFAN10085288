@@ -84,14 +84,14 @@ namespace ICE_1__words_API.Controllers
             return w.Sorted(lang.getNames());
         }
 
-
+        //posts user info to DB
         [HttpPost("PostUserData")]
         public void PostUserData()
         {
 
             WordsClass w = WordsClass.getInstance();
-   
-            /*//get ip address
+
+            //get ip address
             string ip = Response.HttpContext.Connection.RemoteIpAddress.ToString();
             if (ip == "::1")
             {
@@ -100,12 +100,12 @@ namespace ICE_1__words_API.Controllers
 
             //log info
             log.Log("GetUserData method " + "# Time: " + now.ToString() + "# IP Address: " + ip);
-*/
-            
-             w.postUserData();
+
+            w.postUserData();
         }
 
 
+        //posts words to DB
         [HttpPost("PostWords")]
         public  void PostWords(string userInput) 
         {
@@ -126,7 +126,7 @@ namespace ICE_1__words_API.Controllers
             log.Log("PostWords method " + " # Language: " + userInput + " # Time: " + now.ToString() + "# IP Address: " + ip);
         }
 
-        //get from DB
+        //gets random word from DB
         [HttpGet("getWords")]
         public string GetRandomWord(string userInput)
         {

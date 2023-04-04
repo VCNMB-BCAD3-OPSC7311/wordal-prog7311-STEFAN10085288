@@ -12,6 +12,7 @@ namespace ICE_1__words_API
         static string connString = @"Data Source = st10085288.database.windows.net; Initial Catalog = WordleApp; Persist Security Info=True;User ID = st10085288; Password=Lgnbxlnk0108;  Trusted_Connection=False; MultipleActiveResultSets=true";
         SqlConnection dbConn = new SqlConnection(connString);
         SqlCommand dbComm = new SqlCommand();
+        DBControl dbControl = new DBControl();
 
         public String  randomWord = "";
         List<String> list = new List<String>();
@@ -60,54 +61,25 @@ namespace ICE_1__words_API
 
         }
 
+        //posts words to DB
         public void postWords(string userInput, String[] arrWords)
         {            
-            foreach (var item in arrWords)
-            {
-                dbConn.Open();
-                string sql = "Insert into " + userInput + " (word) Values (" + "'" + item + "') ;";
-                dbComm = new SqlCommand(sql, dbConn);
-                int i = dbComm.ExecuteNonQuery();
-                if (i >= 1)
-                {
-                    Console.WriteLine("Added Successfully");
-
-                }
-                else
-                {
-                    Console.WriteLine("Not Added");
-
-                }
-                dbConn.Close();
-            }
+            dbControl.postWords(userInput, arrWords);
         }
 
 
+        //gets random word from DB
         public string getRandomWord(string userInput)
         {
-            dbConn.Open();
-            string sql =  "SELECT TOP 1 word FROM " + userInput + " where len(word) = 5 ORDER BY NEWID() ;";
-            dbComm = new SqlCommand(sql, dbConn); 
-            int i = dbComm.ExecuteNonQuery();
-            string output = (string)dbComm.ExecuteScalar();
-            if (i >= 1)
-            {
-                Console.WriteLine("Retrieved Successfully");
-            }
-            else
-            {
-                Console.WriteLine("Not retrieved");
-            }
+            return dbControl.getRandomWord(userInput);
 
-            dbConn.Close();
-            return output;
-            
 
         }
 
-        public void postUserData()
+        //posts user info to DB
+        public  void postUserData()
         {
-             User.GetUserDataURL();
+            DBControl.GetUserDataURL();
         }
 
 
