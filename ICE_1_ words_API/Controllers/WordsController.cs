@@ -8,12 +8,8 @@ using System.Xml.Linq;
 
 namespace ICE_1__words_API.Controllers
 {
-
-   
-
     [ApiController]
     [Route("[controller]")]
-
 
     public class WordsController : Controller
     {
