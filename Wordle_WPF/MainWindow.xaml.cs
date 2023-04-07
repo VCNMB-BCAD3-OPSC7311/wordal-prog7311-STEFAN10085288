@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,7 +16,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ICE_1__words_API;
-using ICE_1__words_API.Controllers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc.Razor;
 using NLog.Layouts;
@@ -27,7 +27,6 @@ namespace Wordle_WPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        WordsController controller = new WordsController();
         GuessWord guessWord = new GuessWord();
 
         public static string? lang;
@@ -115,10 +114,17 @@ namespace Wordle_WPF
         }
 
         //get random word from DB
-        public void getWord()
+        public async void getWord()
         {
-            word = controller.GetRandomWord(lang);
-            txtTest.Text = word;
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7045/");
+            HttpResponseMessage httpResponseMessage = await client.GetAsync($"Words/getWords?userInput={lang}");
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                word = await httpResponseMessage.Content.ReadAsStringAsync();
+                /*txtTest.Text = word;*/
+                
+            }
         }
 
         //Get language selection from user
